@@ -111,7 +111,7 @@ namespace Telegram.Bot // Intentionally not in Telegram.Bot.Helpers
                 ? new MemoryStream()
                 : new MemoryStream(file.FileSize))
             {
-                await bot.DownloadFileAsync(file.FilePath, cancellationToken)
+                await bot.DownloadFileAsync(file.FilePath, ms, cancellationToken)
                     .ConfigureAwait(false);
                 return ms.ToArray();
             }
