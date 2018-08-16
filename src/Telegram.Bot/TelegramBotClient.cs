@@ -28,9 +28,9 @@ namespace Telegram.Bot
     {
         private static readonly Update[] EmptyUpdates = { };
 
-        private const string BaseUrl = "https://api.telegram.org/bot";
+        private readonly string BaseUrl = "https://api.telegram.org/bot";
 
-        private const string BaseFileUrl = "https://api.telegram.org/file/bot";
+        private readonly string BaseFileUrl = "https://api.telegram.org/file/bot";
 
         private readonly string _baseRequestUrl;
 
@@ -154,9 +154,15 @@ namespace Telegram.Bot
         /// </summary>
         /// <param name="token">API token</param>
         /// <param name="httpClient">A custom <see cref="HttpClient"/></param>
+        /// <param name="UseDirectIP">Use 149.154.167.220 instead of api.telegram.org</param>
         /// <exception cref="ArgumentException">Thrown if <paramref name="token"/> format is invalid</exception>
-        public TelegramBotClient(string token, HttpClient httpClient = null)
+        public TelegramBotClient(string token, bool UseDirectIP, HttpClient httpClient = null)
         {
+            if (UseDirectIP)
+            {
+                BaseUrl = "https://149.154.167.220/bot";
+                BaseFileUrl = "https://149.154.167.220/file/bot";
+            }
             _token = token;
             _baseRequestUrl = $"{BaseUrl}{_token}/";
             _httpClient = httpClient ?? new HttpClient();
@@ -167,9 +173,15 @@ namespace Telegram.Bot
         /// </summary>
         /// <param name="token">API token</param>
         /// <param name="webProxy">Use this <see cref="IWebProxy"/> to connect to the API</param>
+        /// <param name="UseDirectIP">Use 149.154.167.220 instead of api.telegram.org</param>
         /// <exception cref="ArgumentException">Thrown if <paramref name="token"/> format is invalid</exception>
-        public TelegramBotClient(string token, IWebProxy webProxy)
+        public TelegramBotClient(string token, bool UseDirectIP,IWebProxy webProxy)
         {
+            if (UseDirectIP)
+            {
+                BaseUrl = "https://149.154.167.220/bot";
+                BaseFileUrl = "https://149.154.167.220/file/bot";
+            }
             var httpClientHander = new HttpClientHandler
             {
                 Proxy = webProxy,
