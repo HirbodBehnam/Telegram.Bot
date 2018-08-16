@@ -60,3 +60,14 @@ dotnet add package Telegram.Bot
 ```
 
 For testing you can use the [MyGet feed](https://www.myget.org/gallery/telegram-bot) with automated builds.
+
+### Direct IP
+
+This fork allows you to access Telegram servers directly with IP. In some countries like Iran, Telegram is blocked so hard that we could not access Telegram with HTTP Proxy. I found out that I can access their servers if I enter their IP directly. (I somehow bypassed the DNS) Although accessing their servers directly will make SSL invalid. (`NET::ERR_CERT_COMMON_NAME_INVALID` on chrome and `Could not establish a trust relationship for the SSL/TLS secure channel` exception in C#) So you have to bypass it with this code in .Net Framework:
+```c#
+//From https://stackoverflow.com/a/15483698/4213397
+System.Net.ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+```
+Although I DO NOT RECOMMEND you to use direct IP.
+
+And tests will fail because I changed the constructor.
