@@ -68,6 +68,15 @@ This fork allows you to access Telegram servers directly with IP. In some countr
 //From https://stackoverflow.com/a/15483698/4213397
 System.Net.ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 ```
+In .Net Core:
+```c#
+var httpClientHandler = new HttpClientHandler
+{
+    ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => { return true; }
+}
+var client = new HttpClient(httpClientHandler);
+TelegramBotClient Bot = new TelegramBotClient("Token", true, client);
+```
 Although I DO NOT RECOMMEND you to use direct IP.
 
 And tests will fail because I changed the constructor.
